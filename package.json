@@ -7,7 +7,8 @@
     "lib": "lib"
   },
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "jest"
+    
   },
   "repository": {
     "type": "git",
@@ -22,5 +23,8 @@
   "homepage": "https://github.com/JackLabukas/team-generator-using-classes#readme",
   "dependencies": {
     "inquirer": "^8.2.5"
+  },
+  "devDependencies": {
+    "jest": "^29.4.1"
   }
 }
