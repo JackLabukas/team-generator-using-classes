@@ -21,6 +21,10 @@ There was quite few challanges in this project, one of them being, trying to fig
 
 
 
+### ALl tests pass using Jest
+![tests-pass](https://user-images.githubusercontent.com/87778570/216104314-98be282f-8e7a-4d43-8804-f6acacd16fc9.PNG)
+
+
 # Contact
 
 ###If you have any questions, please contact me at:
