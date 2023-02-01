@@ -12,6 +12,7 @@ const render = require("./src/page-template.js");
 
 // TODO: Write Code to gather information about the development team members, and render the HTML file.
 const team = [];
+
 const questionsManager = [
   {
     type: "input",
@@ -87,14 +88,21 @@ const questionsIntern = [
   },
 ];
 
+const followUp = [
+  {
+    type: "list",
+    message: "Chose an option please",
+    choices: ["Engineer", "Intern", "FinishBuildingTeam"],
+    name: "option",
+  },
+];
+
 // function writeToFile(fileName, data) {
 //   return fs.writeFileSync(path.join(process.cwd(), fileName), data);
 // }
 
 function init() {
   inquirer.prompt(questionsManager).then((response) => {
-    // writeToFile("test.html", render(manager));
-    // render(manager);
     const manag = new Manager(
       response.name,
       response.id,
@@ -103,24 +111,55 @@ function init() {
     );
     team.push(manag);
     if (response.option === "Engineer") {
-      inquirer.prompt(questionsEngineer).then((response) => {
-        const engin = new Engineer(
-          response.nameEngineer,
-          response.idEngineer,
-          response.emailEngineer,
-          response.usernameGitHubEngineer
-        );
-        console.log(response);
-        team.push(engin);
-        console.log(team);
-      });
+      engineerQ();
     } else if (response.option === "Intern") {
-      inquirer.prompt(questionsEngineer).then((response) => {
-        const internUser = 
-      });
+      internQ();
     } else if (response.option === "FinishBuildingTeam") {
+      render(team);
+      console.log(team);
     }
-    // console.log(render(manager));
   });
 }
 init();
+
+function engineerQ() {
+  inquirer.prompt(questionsEngineer).then((response) => {
+    const engin = new Engineer(
+      response.nameEngineer,
+      response.idEngineer,
+      response.emailEngineer,
+      response.usernameGitHubEngineer
+    );
+    // console.log(response);
+    team.push(engin);
+    // console.log(team);
+    init2nd();
+  });
+}
+
+function internQ() {
+  inquirer.prompt(questionsIntern).then((response) => {
+    const internUser = new Intern(
+      response.nameIntern,
+      response.idIntern,
+      response.emailIntern,
+      response.schoolIntern
+    );
+    team.push(internUser);
+    // console.log(team);
+    init2nd();
+  });
+}
+
+function init2nd() {
+  inquirer.prompt(followUp).then((response) => {
+    if (response.option === "Engineer") {
+      engineerQ();
+    } else if (response.option === "Intern") {
+      internQ();
+    } else if (response.option === "FinishBuildingTeam") {
+      render(team);
+      console.log(team);
+    }
+  });
+}
