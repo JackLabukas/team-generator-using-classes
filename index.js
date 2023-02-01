@@ -11,8 +11,11 @@ const outputPath = path.join(OUTPUT_DIR, "team.html");
 const render = require("./src/page-template.js");
 
 // TODO: Write Code to gather information about the development team members, and render the HTML file.
+
+// TEAM ARRAY
 const team = [];
 
+//initial questions user will start with
 const questionsManager = [
   {
     type: "input",
@@ -43,6 +46,7 @@ const questionsManager = [
   },
 ];
 
+//engineer questions
 const questionsEngineer = [
   {
     type: "input",
@@ -65,6 +69,8 @@ const questionsEngineer = [
     name: "usernameGitHubEngineer",
   },
 ];
+
+// intern questions
 const questionsIntern = [
   {
     type: "input",
@@ -88,6 +94,7 @@ const questionsIntern = [
   },
 ];
 
+// follow up questions based on user answer
 const followUp = [
   {
     type: "list",
@@ -97,10 +104,7 @@ const followUp = [
   },
 ];
 
-// function writeToFile(fileName, data) {
-//   return fs.writeFileSync(path.join(process.cwd(), fileName), data);
-// }
-
+// init function to start off the interaction
 function init() {
   inquirer.prompt(questionsManager).then((response) => {
     const manag = new Manager(
@@ -117,11 +121,14 @@ function init() {
     } else if (response.option === "FinishBuildingTeam") {
       render(team);
       console.log(team);
+      fs.writeFileSync("index.html", render(team));
     }
   });
 }
+//start interaction
 init();
 
+// engineer questions function
 function engineerQ() {
   inquirer.prompt(questionsEngineer).then((response) => {
     const engin = new Engineer(
@@ -137,6 +144,7 @@ function engineerQ() {
   });
 }
 
+// intern questions function
 function internQ() {
   inquirer.prompt(questionsIntern).then((response) => {
     const internUser = new Intern(
@@ -150,7 +158,7 @@ function internQ() {
     init2nd();
   });
 }
-
+// function to init follow up questions based on response
 function init2nd() {
   inquirer.prompt(followUp).then((response) => {
     if (response.option === "Engineer") {
@@ -160,6 +168,7 @@ function init2nd() {
     } else if (response.option === "FinishBuildingTeam") {
       render(team);
       console.log(team);
+      fs.writeFileSync("index.html", render(team));
     }
   });
 }
